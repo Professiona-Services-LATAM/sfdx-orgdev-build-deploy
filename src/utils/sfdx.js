@@ -21,16 +21,21 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
             }
         }
     });
-
+    core.info("=== Found classes: " + classes);
     if(classes){
         for(var i = 0; i < classes.length; i++){
             classNameTmp = classes[i];
+            core.info("=== Class to open: " + (classesPath+"/"+classNameTmp+".cls"));
             fileContentTmp = fs.readFileSync(classesPath+"/"+classNameTmp+".cls", "utf8");
             if(fileContentTmp.toLowerCase().includes("@istest")){
+                core.info((classesPath+"/"+classNameTmp+".cls") + " Is test class");
                 testClasses.push(classNameTmp);
+            }else{
+                core.info((classesPath+"/"+classNameTmp+".cls") + " Is NOT test class");
             }
         }
     }else{
+        core.info("No hay clases");
         if(defaultTestClass){
             testClasses.push(defaultTestClass);
         }
