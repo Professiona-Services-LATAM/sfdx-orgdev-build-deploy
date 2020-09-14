@@ -41,6 +41,13 @@ inputs:
         required: true
         default: RunLocalTests
 
+#Optional params        
+
+    default_source_path:
+        description: 'Path on the current repository to the project folder. Usually is "force-app/main/default"'
+        required: false
+        default : "force-app/main/default"
+        
     destructive_path:
         description: 'Path for the destructive changes directory'
         required: false
