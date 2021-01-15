@@ -2,6 +2,7 @@ module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+
 /***/ 5350:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -16469,6 +16470,7 @@ try {
   deploy.dataFactory = core.getInput('data_factory');
   deploy.checkonly = (core.getInput('checkonly') === 'true' )? true : false;
   deploy.testlevel = core.getInput('deploy_testlevel');
+  deploy.deployWaitTime = core.getInput('deploy_wait_time') || '60'; // Default wait time is 60 minutes
   
   //Login to Org
   sfdx.login(cert,login);
@@ -16623,7 +16625,7 @@ let deploy = function (deploy){
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json'];
+        var argsDeploy = ['force:source:deploy', '--wait', deploy.deployWaitTime, '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
@@ -16658,7 +16660,7 @@ let destructiveDeploy = function (deploy){
     core.info("=== destructiveDeploy ===");
     if (deploy.destructivePath !== null && deploy.destructivePath !== '') {
         core.info('=== Applying destructive changes ===')
-        var argsDestructive = ['force:mdapi:deploy', '-d', deploy.destructivePath, '-u', 'sfdc', '--wait', '10', '-g', '--json'];
+        var argsDestructive = ['force:mdapi:deploy', '-d', deploy.destructivePath, '-u', 'sfdc', '--wait', deploy.deployWaitTime, '-g', '--json'];
         if (deploy.checkonly) {
             argsDestructive.push('--checkonly');
         }
@@ -16741,80 +16743,48 @@ module.exports = require("https");
 /***/ 1631:
 /***/ ((module) => {
 
-"use strict";
-module.exports = require("net");
+module.exports = eval("require")("@actions/core");
+
 
 /***/ }),
 
-/***/ 2087:
+/***/ 388:
 /***/ ((module) => {
 
-"use strict";
-module.exports = require("os");
+module.exports = eval("require")("@actions/github");
+
 
 /***/ }),
 
-/***/ 5622:
+/***/ 355:
 /***/ ((module) => {
 
-"use strict";
-module.exports = require("path");
+module.exports = eval("require")("properties-reader");
+
 
 /***/ }),
 
-/***/ 2413:
+/***/ 431:
 /***/ ((module) => {
 
-"use strict";
-module.exports = require("stream");
+module.exports = eval("require")("xml2js");
+
 
 /***/ }),
 
-/***/ 4304:
+/***/ 129:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("string_decoder");
+module.exports = require("child_process");;
 
 /***/ }),
 
-/***/ 8213:
+/***/ 747:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("timers");
-
-/***/ }),
-
-/***/ 4016:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("tls");
-
-/***/ }),
-
-/***/ 8835:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("url");
-
-/***/ }),
-
-/***/ 1669:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("util");
-
-/***/ }),
-
-/***/ 8761:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("zlib");
+module.exports = require("fs");;
 
 /***/ })
 
@@ -16824,7 +16794,7 @@ module.exports = require("zlib");
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -16839,7 +16809,7 @@ module.exports = require("zlib");
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
-/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			__webpack_modules__[moduleId](module, module.exports, __nccwpck_require__);
 /******/ 			threw = false;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
@@ -16852,7 +16822,7 @@ module.exports = require("zlib");
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	__webpack_require__.ab = __dirname + "/";/************************************************************************/
+/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
